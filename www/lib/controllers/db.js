@@ -6,7 +6,6 @@
       var _this = this;
       this.db = window.openDatabase("diary", 1, "diary", 1000000);
       return this.db.transaction(function(t) {
-        console.log('1');
         return t.executeSql('create table if not exists digits(' + 'id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT' + ')');
       }, this.onError);
     },
@@ -15,9 +14,8 @@
     },
     getAll: function(callback) {
       var _this = this;
-      console.log('2');
       return this.db.transaction(function(t) {
-        return t.executeSql('select * from digits', [], function(t, results) {
+        return t.executeSql('select * from digits order by id desc', [], function(t, results) {
           return callback(_this.fixResults(results));
         }, _this.onError);
       }, this.onError);

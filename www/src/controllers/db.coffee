@@ -4,7 +4,6 @@ module.exports =
 		@db = window.openDatabase "diary", 1, "diary", 1000000
 
 		@db.transaction (t) =>
-			console.log '1'
 			t.executeSql 'create table if not exists digits(' +
 				'id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT' +
 				')'
@@ -13,9 +12,8 @@ module.exports =
 	onError: (e) -> console.log 'DB ERROR:', e
 	 
 	getAll: (callback) ->
-		console.log '2'
 		@db.transaction (t) =>
-			t.executeSql 'select * from digits', [], (t, results) =>
+			t.executeSql 'select * from digits order by id desc', [], (t, results) =>
 				callback @fixResults results
 			, @onError
 		, @onError

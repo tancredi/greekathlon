@@ -1,14 +1,6 @@
 
 <ul class="digits-list">
-	{{# pairs }}
-		<li>
-			{{# digits }}
-				<span class="digit-color digit-color-{{ num }}">
-					{{ num }}
-				</span>
-			{{/ digits}}
-		</li>
-	{{/ pairs }}
+	{{> partials/digits }}
 </ul>
 
 <ul class="words-list">

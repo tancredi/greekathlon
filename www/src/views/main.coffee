@@ -43,8 +43,17 @@ class HomeView extends BaseView
 			return false
 
 		db.getAll (data) ->
-			savedList = $ renderer.render 'partials/saved-list'
-			savedList.appendTo @elements.savedList
+			ctx = []
+
+			for entry in data
+				ctx.push generateDigitCtx entry.value
+
+			savedList = $ renderer.render 'partials/saved-list', entries: ctx
+			self.elements.savedWrap.append savedList
+
+		@elements.main.on device.get('clickEvent'), '[data-role="saved-digits"]', ->
+			digits = $(@).attr 'data-digits'
+			views.open 'main.result', 'slide-right', null, false, digits
 
 	submit: =>
 		digits = @elements.input.val()
@@ -61,53 +70,57 @@ class ResultView extends BaseView
 		@elements.back = getByRole 'back', @elements.main
 
 	constructor: (digits) ->
-		pairContexts = []
-		pairs = []
-
-		for i in [ 0 .. ( digits.length - 1 ) / 2 ]
-			first = digits[ i * 2 ]
-			second = digits[ i * 2 + 1 ] or ''
-			pairs.push "#{first}#{second}"
-
-		for pair in pairs
-			index = parseInt pair, 10
-			str = map[index]
-
-			pairContexts.push @generateValCtx pair, str
-
-		$.extend this.context, pairs: pairContexts
+		pairContexts = generateDigitCtx digits
+		$.extend this.context, pairContexts
 
 	bind: =>
 		super()
 		
 		@elements.back.on device.get('clickEvent'), -> app.views.open 'main.index', 'slide-left'
 
-	generateValCtx: (pair, str) =>
-		parts = []
-		consParts = []
+generateDigitCtx = (digits) ->
+	pairContexts = []
+	pairs = []
 
-		temp = vow: false, val: ''
+	for i in [ 0 .. ( digits.length - 1 ) / 2 ]
+		first = digits[ i * 2 ]
+		second = digits[ i * 2 + 1 ] or ''
+		pairs.push "#{first}#{second}"
 
-		for char in str
-			if vowels.indexOf(char) isnt -1
-				if temp.val.length > 0
-					parts.push temp
-					consParts.push temp
-				temp = vow: false, val: ''
-				parts.push vow: true, val: char
-			else temp.val += char
+	for pair in pairs
+		index = parseInt pair, 10
+		str = map[index]
 
-		if temp.val.length > 0
-			parts.push temp
-			consParts.push temp
+		pairContexts.push generateValCtx pair, str
 
-		if consParts.length > 0 then consParts[0].num = pair[0]
-		if consParts.length > 1 then consParts[1].num = pair[1]
+	return pairs: pairContexts, digits: digits
 
-		digits = []
-		for digit in pair
-			digits.push num: digit
+generateValCtx = (pair, str) ->
+	parts = []
+	consParts = []
 
-		return parts: parts, digits: digits
+	temp = vow: false, val: ''
+
+	for char in str
+		if vowels.indexOf(char) isnt -1
+			if temp.val.length > 0
+				parts.push temp
+				consParts.push temp
+			temp = vow: false, val: ''
+			parts.push vow: true, val: char
+		else temp.val += char
+
+	if temp.val.length > 0
+		parts.push temp
+		consParts.push temp
+
+	if consParts.length > 0 then consParts[0].num = pair[0]
+	if consParts.length > 1 then consParts[1].num = pair[1]
+
+	digits = []
+	for digit in pair
+		digits.push num: digit
+
+	return parts: parts, digits: digits
 
 module.exports = index: HomeView, result: ResultView

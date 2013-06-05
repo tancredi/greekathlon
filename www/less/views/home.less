@@ -124,3 +124,33 @@ a.back {
 	width: 100%;
 	text-align: center;
 }
+
+ul.saved-list {
+	color: #fff;
+	list-style: none;
+	padding: 0;
+	text-align: center;
+
+	>li {
+		margin: 0;
+		font-size: 25px;
+		letter-spacing: -2px;
+		font-weight: bold;
+		padding: 15px 0 0;
+		border-bottom: 1px solid #333;
+
+		&:active, &.touch-active {
+			background: rgba(255, 255, 255, .05)
+		}
+
+		ul.pairs {
+			padding: 0;
+
+			li {
+				margin: 0;
+				padding: 0;
+				display: inline-block;
+			}
+		}
+	}
+}
