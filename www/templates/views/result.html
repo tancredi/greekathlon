@@ -1,0 +1,21 @@
+
+
+<ul class="digits-list">
+	{{# pairs }}
+		<li>
+			{{# digits }}
+				<span class="digit-color digit-color-{{ num }}">
+					{{ num }}
+				</span>
+			{{/ digits}}
+		</li>
+	{{/ pairs }}
+</ul>
+
+<ul class="words-list">
+	{{# pairs }}
+		<li>
+			{{# parts }}{{# vow }}<span class="vowel">{{ val }}</span>{{/ vow }}{{^ vow }}<span class="cons digit-color digit-color-{{ num }}">{{ val }}</span>{{/ vow }}{{/ parts }}
+		</li>
+	{{/ pairs }}
+</ul>

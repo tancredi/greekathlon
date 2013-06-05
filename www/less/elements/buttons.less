@@ -17,11 +17,11 @@
 	.text-shadow(0, 2px, 0, rgba(0, 0, 0, .3));
 	font-weight: 100;
 
-	&.touch-active {
+	&.touch-active, &:active {
 		background-color: darken(@bg-color, 3%);
 	}
 }
 
-.button {
+.button, button, input[type="submit"] {
 	.button-color();
 }
