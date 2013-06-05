@@ -11,7 +11,6 @@ vowels = [ 'a', 'e', 'i', 'o', 'u' ]
 
 class HomeView extends BaseView
 	templateName: 'home'
-	fixHeight: true
 
 	constructor: ->
 
@@ -51,9 +50,20 @@ class HomeView extends BaseView
 			savedList = $ renderer.render 'partials/saved-list', entries: ctx
 			self.elements.savedWrap.append savedList
 
-		@elements.main.on device.get('clickEvent'), '[data-role="saved-digits"]', ->
-			digits = $(@).attr 'data-digits'
-			views.open 'main.result', 'slide-right', null, false, digits
+		scrolling = null
+
+		@elements.main.on 'touchmove', '[data-role="saved-digits"]', (e) -> scrolling = true
+
+		@elements.main.on 'touchstart', '[data-role="saved-digits"]', (e) ->
+			scrolling = false
+			return null
+
+		@elements.main.on 'touchend', '[data-role="saved-digits"]', (e) ->
+			if not scrolling
+				digits = $(@).attr 'data-digits'
+				views.open 'main.result', 'slide-right', null, false, digits
+			scrolling = false
+			return true
 
 	submit: =>
 		digits = @elements.input.val()
@@ -63,6 +73,7 @@ class HomeView extends BaseView
 class ResultView extends BaseView
 	templateName: 'result'
 	fixHeight: true
+	classNames: 'view-results'
 
 	getElements: =>
 		super()

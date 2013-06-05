@@ -13,6 +13,8 @@
 
     BaseView.prototype.fixHeight = false;
 
+    BaseView.prototype.classNames = '';
+
     BaseView.prototype.context = {};
 
     function BaseView() {
@@ -45,7 +47,7 @@
         _this = this;
       rendered = renderer.render("views/" + this.templateName, this.context);
       this.elements = {
-        main: $("<div data-role='view' class='view'>" + rendered + "</div>")
+        main: $("<div data-role='view' class='view " + this.classNames + "'>" + rendered + "</div>")
       };
       if (this.fixHeight) {
         this.elements.main.css({

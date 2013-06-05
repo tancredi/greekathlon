@@ -4,6 +4,7 @@ device = require './device'
 class BaseView
 	templateName: ''
 	fixHeight: false
+	classNames: ''
 	context: {}
 
 	constructor: ->
@@ -11,7 +12,7 @@ class BaseView
 	render: (wrapper) =>
 		rendered = renderer.render "views/#{@templateName}", @context
 
-		@elements = main: $ "<div data-role='view' class='view'>#{rendered}</div>"
+		@elements = main: $ "<div data-role='view' class='view #{@classNames}'>#{rendered}</div>"
 
 		if @fixHeight then @elements.main.css height: device.get('size').height
 

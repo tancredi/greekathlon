@@ -27,8 +27,6 @@
 
     HomeView.prototype.templateName = 'home';
 
-    HomeView.prototype.fixHeight = true;
-
     function HomeView() {
       var _this = this;
       this.submit = function() {
@@ -51,7 +49,7 @@
     };
 
     HomeView.prototype.bind = function() {
-      var self;
+      var scrolling, self;
       HomeView.__super__.bind.call(this);
       self = this;
       this.elements.input.on('keydown', function(e) {
@@ -85,10 +83,22 @@
         }));
         return self.elements.savedWrap.append(savedList);
       });
-      return this.elements.main.on(device.get('clickEvent'), '[data-role="saved-digits"]', function() {
+      scrolling = null;
+      this.elements.main.on('touchmove', '[data-role="saved-digits"]', function(e) {
+        return scrolling = true;
+      });
+      this.elements.main.on('touchstart', '[data-role="saved-digits"]', function(e) {
+        scrolling = false;
+        return null;
+      });
+      return this.elements.main.on('touchend', '[data-role="saved-digits"]', function(e) {
         var digits;
-        digits = $(this).attr('data-digits');
-        return views.open('main.result', 'slide-right', null, false, digits);
+        if (!scrolling) {
+          digits = $(this).attr('data-digits');
+          views.open('main.result', 'slide-right', null, false, digits);
+        }
+        scrolling = false;
+        return true;
       });
     };
 
@@ -110,6 +120,8 @@
     ResultView.prototype.templateName = 'result';
 
     ResultView.prototype.fixHeight = true;
+
+    ResultView.prototype.classNames = 'view-results';
 
     ResultView.prototype.getElements = function() {
       ResultView.__super__.getElements.call(this);
