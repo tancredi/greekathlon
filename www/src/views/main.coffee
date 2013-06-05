@@ -2,8 +2,10 @@
 getByRole = require('../helpers/dom').getByRole
 BaseView = require('../core/View').BaseView
 device = require '../core/device'
+renderer = require '../core/renderer'
 views = require '../core/views'
 map = require '../fixtures/map'
+db = require '../controllers/db'
 
 vowels = [ 'a', 'e', 'i', 'o', 'u' ]
 
@@ -19,13 +21,12 @@ class HomeView extends BaseView
 		@elements.form = @elements.main.find 'form'
 		@elements.input = getByRole 'digit-input', @elements.form
 		@elements.button = @elements.form.find 'button'
+		@elements.savedWrap = getByRole 'saved-wrap', @elements.main
 
 	bind: =>
 		super()
 
 		self = @
-
-		@elements.input.focus()
 
 		@elements.input.on 'keydown', (e) ->
 			charCode = if e.which then e.which else e.keyCode
@@ -33,20 +34,31 @@ class HomeView extends BaseView
 			isAllowed = charCode is 8 or charCode is 13
 			if not isNumber and not isAllowed then return false
 
-			if charCode is 13 then self.submit()
+		@elements.input.on 'change', -> self.submit()
+
+		@elements.form.on 'submit', -> return false
 
 		@elements.button.on device.get('clickEvent'), ->
 			self.submit()
 			return false
-		
+
+		db.getAll (data) ->
+			savedList = $ renderer.render 'partials/saved-list'
+			savedList.appendTo @elements.savedList
 
 	submit: =>
 		digits = @elements.input.val()
-		views.open 'main.result', 'pop-out', null, false, digits
+		views.open 'main.result', 'slide-right', null, false, digits
+		db.save digits
 
 class ResultView extends BaseView
 	templateName: 'result'
 	fixHeight: true
+
+	getElements: =>
+		super()
+
+		@elements.back = getByRole 'back', @elements.main
 
 	constructor: (digits) ->
 		pairContexts = []
@@ -64,6 +76,11 @@ class ResultView extends BaseView
 			pairContexts.push @generateValCtx pair, str
 
 		$.extend this.context, pairs: pairContexts
+
+	bind: =>
+		super()
+		
+		@elements.back.on device.get('clickEvent'), -> app.views.open 'main.index', 'slide-left'
 
 	generateValCtx: (pair, str) =>
 		parts = []

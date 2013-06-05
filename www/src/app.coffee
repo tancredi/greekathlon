@@ -2,6 +2,7 @@
 Game = require('./controllers/Game').Game
 device = require './core/device'
 clickables = require './ui/clickables'
+db = require './controllers/db'
 
 viewRoutes =
 	main: require './views/main'
@@ -23,6 +24,7 @@ bind = -> document.addEventListener 'deviceready', onDeviceReady, false
 
 onDeviceReady = ->
 	clickables.initialise()
+	db.initialise()
 	view = app.views.open 'main.index'
 
 init()
