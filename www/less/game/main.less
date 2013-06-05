@@ -1,0 +1,21 @@
+
+.game-display {
+	position: relative;
+
+	.orb {
+		background-color: #ca0932;
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		.border-radius(20px);
+		position: absolute;
+		margin-left: -10px;
+		margin-top: -10px;
+		.shadow(rgba(150, 150, 150, .1), 0, 0, 0, 30px);
+
+		&.state-attractor {
+			background-color: @color-highlight;
+			.shadow(rgba(150, 150, 150, .1), 0, 0, 0, 60px);
+		}
+	}
+}
