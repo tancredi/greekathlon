@@ -2,7 +2,7 @@
 Game = require('./controllers/Game').Game
 device = require './core/device'
 clickables = require './ui/clickables'
-db = require './controllers/db'
+db = require './core/db'
 
 viewRoutes =
 	main: require './views/main'

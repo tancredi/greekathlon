@@ -17,7 +17,7 @@
 
   map = require('../fixtures/map');
 
-  db = require('../controllers/db');
+  db = require('../core/db');
 
   vowels = ['a', 'e', 'i', 'o', 'u'];
 
@@ -71,11 +71,13 @@
         self.submit();
         return false;
       });
-      db.getAll(function(data) {
+      db.select('digits', {}, {
+        order: ['id', -1]
+      }, function(digits) {
         var ctx, entry, savedList, _i, _len;
         ctx = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          entry = data[_i];
+        for (_i = 0, _len = digits.length; _i < _len; _i++) {
+          entry = digits[_i];
           ctx.push(generateDigitCtx(entry.value));
         }
         savedList = $(renderer.render('partials/saved-list', {
@@ -106,7 +108,9 @@
       var digits;
       digits = this.elements.input.val();
       views.open('main.result', 'slide-right', null, false, digits);
-      return db.save(digits);
+      return db.insert('digits', {
+        value: digits
+      });
     };
 
     return HomeView;

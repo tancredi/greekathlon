@@ -5,7 +5,7 @@ device = require '../core/device'
 renderer = require '../core/renderer'
 views = require '../core/views'
 map = require '../fixtures/map'
-db = require '../controllers/db'
+db = require '../core/db'
 
 vowels = [ 'a', 'e', 'i', 'o', 'u' ]
 
@@ -41,10 +41,10 @@ class HomeView extends BaseView
 			self.submit()
 			return false
 
-		db.getAll (data) ->
+		db.select 'digits', {}, order: [ 'id', -1 ], (digits) ->
 			ctx = []
 
-			for entry in data
+			for entry in digits
 				ctx.push generateDigitCtx entry.value
 
 			savedList = $ renderer.render 'partials/saved-list', entries: ctx
@@ -68,7 +68,7 @@ class HomeView extends BaseView
 	submit: =>
 		digits = @elements.input.val()
 		views.open 'main.result', 'slide-right', null, false, digits
-		db.save digits
+		db.insert 'digits', value: digits
 
 class ResultView extends BaseView
 	templateName: 'result'
