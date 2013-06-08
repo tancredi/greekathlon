@@ -1,20 +1,29 @@
+
+debugDb = require('./debug').get 'db'
+
+config =
+	ns: 'greekathlon'
+	version: ''
+	name: 'Greekathlon'
+	estimatedSize: 1024 * 1024
+
 module.exports =
 	 
 	initialise: ->
-		@db = window.openDatabase "diary", 1, "diary", 1000000
+		if not window.openDatabase
+			@db = transaction: (callback) -> callback executeSql: (query, options, callback) -> callback null, null
+			@supported = false
+		else
+			@db = window.openDatabase config.ns, config.version, config.name, config.estimatedSize
+			@supported = true
 
-		@db.transaction (t) =>
-			t.executeSql 'create table if not exists digits(' +
-				'id INTEGER PRIMARY KEY AUTOINCREMENT, value TEXT' +
-				')'
-		, @onError
-
-	onError: (e) -> console.log 'DB ERROR:', e
+	onError: (q, m) -> console.log 'DB ERROR:', m
 
 	query: (queryStr, options = [], callback) ->
+		if debugDb then console.log "DB QUERY: #{queryStr}"
 		@db.transaction (t) =>
 			t.executeSql queryStr, options, (t, results) =>
-				results = if results then @fixResults results else null
+				results = if results then @fixResults results else []
 				if typeof callback is 'function' then callback results
 			, @onError
 		, @onError
@@ -45,3 +54,13 @@ module.exports =
 		keys = ( key for key, val of values ).join ', '
 		values = ( "'#{val}'" for key, val of values ).join ', '
 		@query "INSERT INTO #{table}(#{keys}) values(#{values})", [], callback
+
+	createTable: (tableName, schema = {}, callback) ->
+		fieldsStr = "id INTEGER PRIMARY KEY AUTOINCREMENT"
+		fieldsStrAdd = ( "#{key} #{type}" for key, type of schema ).join ', '
+
+		if fieldsStrAdd.length then fieldsStr = "#{fieldsStr}, #{fieldsStrAdd}"
+
+		@query "CREATE TABLE IF NOT EXISTS #{tableName}(#{fieldsStr})", [], callback
+
+	dropTable: (tableName, callback) -> @query "DROP TABLE #{tableName}", [], callback

@@ -3,7 +3,8 @@
   var debug;
 
   debug = {
-    fast: false
+    fast: false,
+    db: false
   };
 
   module.exports = {
@@ -11,6 +12,8 @@
       switch (prop) {
         case 'fast':
           return debug.fast;
+        case 'db':
+          return debug.db;
       }
     }
   };
