@@ -11,7 +11,11 @@ module.exports =
 
 	closeAll: -> getByRole('view', @wrap).remove()
 
-	load: (ns, view) -> @views[ns] = view
+	load: (ns, view) ->
+		if typeof ns is 'object'
+			routes = ns
+			@load ns, view for ns, view of routes
+		else @views[ns] = view
 
 	open: (ns, transition = null, callback = null, openOnTop = false, options = {}) ->
 		if not openOnTop then @shown = []

@@ -1,20 +1,12 @@
-Hogan = require 'hogan.js'
-
-defaults = prefix: ''
 
 module.exports =
 
-	initialise: (@conf = defaults) ->
-		@templates = {}
-		@load()
-		return @
+	templates: {}
 
-	load: -> @set id, new Hogan.Template template for id, template of window.templates
+	compile: (tpl) -> if typeof template is 'function' then template = tpl else Handlebars.compile tpl
 
-	compile: (tpl) -> if template instanceof Hogan.Template then template = tpl else Hogan.compile tpl
+	set: (id, template) -> @templates[id] = if typeof template is 'string' then @compile template else template
 
-	set: (id, template) -> @templates[@conf.prefix + id] = if typeof template is 'string' then @compile template else template
+	get: (nsString = null) -> if nsString? then @templates[nsString] else @templates
 
-	get: (nsString = null) -> if nsString? then @templates[@conf.prefix + nsString] else @templates
-
-	render: (id, data) -> if @get(id)? then @get(id).render data, @templates else throw "Template '#{id}' not found"
+	render: (id, data) -> if @get(id)? then @get(id) data else throw "Template '#{id}' not found"

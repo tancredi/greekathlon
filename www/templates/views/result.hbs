@@ -1,0 +1,14 @@
+
+<ul class="digits-list">
+	{{> digits }}
+</ul>
+
+<ul class="words-list">
+	{{#each pairs}}
+		<li>
+			{{#each parts}}{{#if vow}}<span class="vowel">{{ val }}</span>{{else}}<span class="cons digit-color digit-color-{{ num }}">{{val}}</span>{{/if}}{{/each}}
+		</li>
+	{{/each}}
+</ul>
+
+<a href="#" class="back" data-role="back">Back</a>

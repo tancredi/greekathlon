@@ -1,0 +1,9 @@
+<ul class="saved-list">
+	{{#each entries}}
+		<li data-role="saved-digits" data-digits="{{ digits }}">
+			<ul class="pairs">
+				{{> digits}}
+			</ul>
+		</li>
+	{{/each}}
+</ul>

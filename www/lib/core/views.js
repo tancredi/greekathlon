@@ -17,7 +17,18 @@
       return getByRole('view', this.wrap).remove();
     },
     load: function(ns, view) {
-      return this.views[ns] = view;
+      var routes, _results;
+      if (typeof ns === 'object') {
+        routes = ns;
+        _results = [];
+        for (ns in routes) {
+          view = routes[ns];
+          _results.push(this.load(ns, view));
+        }
+        return _results;
+      } else {
+        return this.views[ns] = view;
+      }
     },
     open: function(ns, transition, callback, openOnTop, options) {
       var view;

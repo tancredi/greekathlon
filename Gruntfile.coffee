@@ -2,6 +2,7 @@ module.exports = (grunt) =>
   grunt.loadNpmTasks 'grunt-contrib-less'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-handlebars'
   grunt.loadNpmTasks 'grunt-browserify2'
   grunt.loadNpmTasks 'grunt-exec'
   grunt.loadNpmTasks 'grunt-parallel'
@@ -30,6 +31,22 @@ module.exports = (grunt) =>
         entry: './www/lib/app.js'
         compile: './www/js/app.js'
 
+    handlebars:
+      compile:
+        options:
+          namespace: "window.templates"
+          processName: (filename) ->
+            parts = filename.split '.'
+            parts.pop()
+            templateName = parts.join '.'
+            return templateName.substr 'www/templates/'.length
+          processPartialName: @processName
+          partialRegex: /.*/
+          partialsPathRegex: /\/partials\//
+          partialsUseNamespace: true
+        files:
+          "www/js/templates.js": [ "www/templates/*/**.hbs" ]
+
     exec:
       templates:
         command: 'coffee www/script/compileTemplates.coffee'
@@ -56,6 +73,11 @@ module.exports = (grunt) =>
         tasks: [ 'exec:templates' ]
         options: interrupt: true
 
+      handlebars:
+        files: [ "www/templates/**/*.hbs" ]
+        tasks: [ 'handlebars' ]
+        options: interrupt: true
+
     parallel:
       watch:
         tasks: [
@@ -74,6 +96,10 @@ module.exports = (grunt) =>
           {
             grunt: true,
             args: [ 'watch:templates' ]
+          }
+          {
+            grunt: true,
+            args: [ 'watch:handlebars' ]
           }
         ]
 

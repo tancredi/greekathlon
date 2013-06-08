@@ -22,8 +22,8 @@ task 'watch', 'Watching for changes...', ->
     style.stdout.on 'data', (data) ->
         print data.toString()
 
-    templates = spawn 'grunt', [ 'watch:templates' ]
-    templates.stderr.on 'data', (data) ->
+    handlebars = spawn 'grunt', [ 'watch:handlebars' ]
+    handlebars.stderr.on 'data', (data) ->
         process.stderr.write data.toString()
-    templates.stdout.on 'data', (data) ->
+    handlebars.stdout.on 'data', (data) ->
         print data.toString()
