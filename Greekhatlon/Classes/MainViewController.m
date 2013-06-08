@@ -81,7 +81,6 @@
             sv.bounces = NO;
         }
     }
-    [self setWantsFullScreenLayout:YES];
 }
 
 - (void)viewDidUnload
