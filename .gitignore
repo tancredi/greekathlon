@@ -3,4 +3,5 @@ node_modules
 www/js
 www/lib
 www/css/index.css
-*/**.DS_Store
+*.DS_Store
+*.xcuserstate
