@@ -47,10 +47,6 @@ module.exports = (grunt) =>
         files:
           "www/js/templates.js": [ "www/templates/*/**.hbs" ]
 
-    exec:
-      templates:
-        command: 'coffee www/script/compileTemplates.coffee'
-
     watch:
 
       less:
@@ -66,11 +62,6 @@ module.exports = (grunt) =>
       bundle:
         files: [ './www/src/**/*.coffee' ]
         tasks: [ 'coffee', 'browserify2' ]
-        options: interrupt: true
-
-      templates:
-        files: [ './www/templates/**/*.html' ]
-        tasks: [ 'exec:templates' ]
         options: interrupt: true
 
       handlebars:
@@ -95,13 +86,9 @@ module.exports = (grunt) =>
           }
           {
             grunt: true,
-            args: [ 'watch:templates' ]
-          }
-          {
-            grunt: true,
             args: [ 'watch:handlebars' ]
           }
         ]
 
   grunt.registerTask 'default', 'parallel:watch'
-  grunt.registerTask 'build', [ 'less', 'coffee', 'browserify2', 'templates' ]
+  grunt.registerTask 'build', [ 'less', 'coffee', 'browserify2', 'handlebars' ]
