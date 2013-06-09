@@ -11,7 +11,7 @@ module.exports =
 
 	bind: ->
 		self = @
-		$('body').on device.get('clickEvent'), clickables, -> self.onClick $ @
+		$('body').on 'click touchend', clickables, -> self.onClick $ @
 
 	onClick: (element) ->
 		element.addClass classNames.touchActive

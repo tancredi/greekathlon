@@ -46,7 +46,7 @@ generateValCtx = (pair, str) ->
 	for digit in pair
 		digits.push num: digit
 
-	return parts: parts, digits: digits
+	return parts: parts, digits: digits, icon: str.toLowerCase()
 
 module.exports =
 	generateDigitCtx: generateDigitCtx

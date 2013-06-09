@@ -22,6 +22,6 @@ class OutputView extends BaseView
 	bind: =>
 		super()
 		
-		@elements.back.on device.get('clickEvent'), -> views.open 'home', 'slide-left'
+		@elements.back.on 'click touchend', -> views.open 'home', 'slide-left'
 
 module.exports = OutputView: OutputView

@@ -45,7 +45,7 @@
 
     OutputView.prototype.bind = function() {
       OutputView.__super__.bind.call(this);
-      return this.elements.back.on(device.get('clickEvent'), function() {
+      return this.elements.back.on('click touchend', function() {
         return views.open('home', 'slide-left');
       });
     };

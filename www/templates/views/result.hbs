@@ -6,6 +6,7 @@
 <ul class="words-list">
 	{{#each pairs}}
 		<li>
+			<i class="icon-{{icon}}"></i>
 			{{#each parts}}{{#if vow}}<span class="vowel">{{ val }}</span>{{else}}<span class="cons digit-color digit-color-{{ num }}">{{val}}</span>{{/if}}{{/each}}
 		</li>
 	{{/each}}

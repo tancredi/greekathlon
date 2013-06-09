@@ -35,7 +35,7 @@ class HomeView extends BaseView
 
 		@elements.form.on 'submit', -> return false
 
-		@elements.button.on device.get('clickEvent'), ->
+		@elements.button.on 'click touchend', ->
 			self.submit()
 			return false
 
@@ -50,16 +50,17 @@ class HomeView extends BaseView
 
 		scrolling = null
 
-		@elements.main.on 'touchmove', '[data-role="saved-digits"]', (e) -> scrolling = true
+		@elements.main.on 'mousemove touchmove', '[data-role="saved-digits"]', (e) ->
+			scrolling = true
 
-		@elements.main.on 'touchstart', '[data-role="saved-digits"]', (e) ->
+		@elements.main.on 'mousedown touchstart', '[data-role="saved-digits"]', (e) ->
 			scrolling = false
 			return null
 
-		@elements.main.on 'touchend', '[data-role="saved-digits"]', (e) ->
+		@elements.main.on 'mouseup touchend', '[data-role="saved-digits"]', (e) ->
 			if not scrolling
 				digits = $(@).attr 'data-digits'
-				views.open 'main.result', 'slide-right', null, false, digits
+				views.open 'output', 'slide-right', null, false, digits
 			scrolling = false
 			return true
 

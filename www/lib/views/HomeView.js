@@ -65,7 +65,7 @@
       this.elements.form.on('submit', function() {
         return false;
       });
-      this.elements.button.on(device.get('clickEvent'), function() {
+      this.elements.button.on('click touchend', function() {
         self.submit();
         return false;
       });
@@ -84,18 +84,18 @@
         return self.elements.savedWrap.append(savedList);
       });
       scrolling = null;
-      this.elements.main.on('touchmove', '[data-role="saved-digits"]', function(e) {
+      this.elements.main.on('mousemove touchmove', '[data-role="saved-digits"]', function(e) {
         return scrolling = true;
       });
-      this.elements.main.on('touchstart', '[data-role="saved-digits"]', function(e) {
+      this.elements.main.on('mousedown touchstart', '[data-role="saved-digits"]', function(e) {
         scrolling = false;
         return null;
       });
-      return this.elements.main.on('touchend', '[data-role="saved-digits"]', function(e) {
+      return this.elements.main.on('mouseup touchend', '[data-role="saved-digits"]', function(e) {
         var digits;
         if (!scrolling) {
           digits = $(this).attr('data-digits');
-          views.open('main.result', 'slide-right', null, false, digits);
+          views.open('output', 'slide-right', null, false, digits);
         }
         scrolling = false;
         return true;

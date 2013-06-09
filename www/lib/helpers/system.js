@@ -73,7 +73,8 @@
     }
     return {
       parts: parts,
-      digits: digits
+      digits: digits,
+      icon: str.toLowerCase()
     };
   };
 

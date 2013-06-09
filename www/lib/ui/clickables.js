@@ -19,7 +19,7 @@
     bind: function() {
       var self;
       self = this;
-      return $('body').on(device.get('clickEvent'), clickables, function() {
+      return $('body').on('click touchend', clickables, function() {
         return self.onClick($(this));
       });
     },
