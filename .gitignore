@@ -1,1 +1,6 @@
 node_modules
+!www/js/vendor*
+www/js/*.js
+www/lib/*.js
+www/css/*.css
+*.DS_Store
