@@ -3,4 +3,4 @@ node_modules
 www/js/*/**.js
 www/lib/*.js
 www/css/index.css
-*.DS_Store
+*/**.DS_Store
