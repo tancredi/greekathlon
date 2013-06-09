@@ -8,12 +8,12 @@ models = require './core/models'
 
 # Load views
 views.load
-	home: require('./views/HomeView').HomeView
-	output: require('./views/OutputView').OutputView
+	home: require './views/HomeView'
+	output: require './views/OutputView'
 
 # Load models
 models.load
-	digits: require('./models/Digits').Digits
+	digits: require './models/Digits'
 
 # Load templates
 renderer.templates = window.templates

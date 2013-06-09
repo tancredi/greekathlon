@@ -115,6 +115,26 @@
       })()).join(', ');
       return this.query("INSERT INTO " + table + "(" + keys + ") values(" + values + ")", [], callback);
     },
+    "delete": function(table, conditions, callback) {
+      var conditionStr, key, queryStr, value;
+      if (conditions == null) {
+        conditions = {};
+      }
+      queryStr = "DELETE FROM " + table;
+      conditionStr = ((function() {
+        var _results;
+        _results = [];
+        for (key in conditions) {
+          value = conditions[key];
+          _results.push("" + key + " = '" + value + "'");
+        }
+        return _results;
+      })()).join(', ');
+      if (conditionStr.length) {
+        queryStr += " WHERE " + conditionStr;
+      }
+      return this.query(queryStr, [], callback);
+    },
     createTable: function(tableName, schema, callback) {
       var fieldsStr, fieldsStrAdd, key, type;
       if (schema == null) {

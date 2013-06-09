@@ -5,4 +5,4 @@ class BaseModel
 
 	constructor: (values) ->
 
-module.exports = BaseModel
+module.exports = BaseModel: BaseModel

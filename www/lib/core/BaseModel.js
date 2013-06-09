@@ -14,6 +14,8 @@
 
   })();
 
-  module.exports = BaseModel;
+  module.exports = {
+    BaseModel: BaseModel
+  };
 
 }).call(this);

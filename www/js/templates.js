@@ -50,14 +50,18 @@ helpers = this.merge(helpers, Handlebars.helpers); partials = this.merge(partial
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n		<li data-role=\"saved-digits\" data-digits=\"";
+  buffer += "\n		<li>\n			<div class=\"inner\" data-role=\"saved-digits\" data-digits=\"";
   if (stack1 = helpers.digits) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.digits; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n			<ul class=\"pairs\">\n				";
+    + "\" data-id=\"";
+  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n				<ul class=\"pairs\">\n					";
   stack1 = self.invokePartial(partials.digits, 'digits', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n			</ul>\n		</li>\n	";
+  buffer += "\n				</ul>\n			</div>\n		</li>\n	";
   return buffer;
   }
 

@@ -1,5 +1,5 @@
 
-BaseView = require('../core/View').BaseView
+BaseView = require '../core/BaseView'
 getByRole = require('../helpers/dom').getByRole
 generateDigitCtx = require('../helpers/system').generateDigitCtx
 device = require '../core/device'
@@ -24,4 +24,4 @@ class OutputView extends BaseView
 		
 		@elements.back.on 'click touchend', -> views.open 'home', 'slide-left'
 
-module.exports = OutputView: OutputView
+module.exports = OutputView

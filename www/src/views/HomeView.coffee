@@ -1,11 +1,12 @@
 
-BaseView = require('../core/View').BaseView
+BaseView = require '../core/BaseView'
 getByRole = require('../helpers/dom').getByRole
 device = require '../core/device'
 renderer = require '../core/renderer'
 views = require '../core/views'
 db = require '../core/db'
 generateDigitCtx = require('../helpers/system').generateDigitCtx
+DigitsList = require '../ui/DigitsList'
 
 class HomeView extends BaseView
 	templateName: 'home'
@@ -39,34 +40,25 @@ class HomeView extends BaseView
 			self.submit()
 			return false
 
+		@loadData()
+
+	loadData: =>
+		self = @
+
 		db.select 'digits', {}, order: [ 'id', -1 ], (digits) ->
-			ctx = []
+			ctx = entries: []
 
 			for entry in digits
-				ctx.push generateDigitCtx entry.value
+				ctx.entries.push $.extend true, id: entry.id, generateDigitCtx entry.value
 
-			savedList = $ renderer.render 'saved-list', entries: ctx
+			savedList = $ renderer.render 'saved-list', ctx
 			self.elements.savedWrap.append savedList
 
-		scrolling = null
-
-		@elements.main.on 'mousemove touchmove', '[data-role="saved-digits"]', (e) ->
-			scrolling = true
-
-		@elements.main.on 'mousedown touchstart', '[data-role="saved-digits"]', (e) ->
-			scrolling = false
-			return null
-
-		@elements.main.on 'mouseup touchend', '[data-role="saved-digits"]', (e) ->
-			if not scrolling
-				digits = $(@).attr 'data-digits'
-				views.open 'output', 'slide-right', null, false, digits
-			scrolling = false
-			return true
+			new DigitsList savedList, '[data-role="saved-digits"]'
 
 	submit: =>
 		digits = @elements.input.val()
 		views.open 'output', 'slide-right', null, false, digits
 		db.insert 'digits', value: digits
 
-module.exports = HomeView: HomeView
+module.exports = HomeView

@@ -134,26 +134,40 @@ ul.saved-list {
 	list-style: none;
 	padding: 0;
 	text-align: center;
+	overflow: hidden;
 
 	>li {
 		margin: 0;
-		font-size: 25px;
-		letter-spacing: -2px;
-		font-weight: bold;
-		padding: 15px 0 0;
-		border-bottom: 1px solid #333;
+		overflow: hidden;
 
-		&:active, &.touch-active {
-			background: rgba(255, 255, 255, .05);
+		&.swiping-right {
 		}
 
-		ul.pairs {
-			padding: 0;
+		&.swiping-left {
+			background: fade(#e74c3c, 50%);
+		}
 
-			li {
-				margin: 0;
+		.inner {
+			font-size: 25px;
+			letter-spacing: -2px;
+			font-weight: bold;
+			padding: 15px 0 0;
+			border-bottom: 1px solid #333;
+			.bg-image('textures/noise-grey', 71px 71px);
+			background-color: #ff0000;
+
+			&:active, &.touch-active {
+				background: #2b2b2b;
+			}
+
+			ul.pairs {
 				padding: 0;
-				display: inline-block;
+
+				li {
+					margin: 0;
+					padding: 0;
+					display: inline-block;
+				}
 			}
 		}
 	}

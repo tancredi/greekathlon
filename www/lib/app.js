@@ -15,12 +15,12 @@
   models = require('./core/models');
 
   views.load({
-    home: require('./views/HomeView').HomeView,
-    output: require('./views/OutputView').OutputView
+    home: require('./views/HomeView'),
+    output: require('./views/OutputView')
   });
 
   models.load({
-    digits: require('./models/Digits').Digits
+    digits: require('./models/Digits')
   });
 
   renderer.templates = window.templates;

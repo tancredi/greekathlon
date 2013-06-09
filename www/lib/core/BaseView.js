@@ -90,8 +90,6 @@
 
   })();
 
-  module.exports = {
-    BaseView: BaseView
-  };
+  module.exports = BaseView;
 
 }).call(this);

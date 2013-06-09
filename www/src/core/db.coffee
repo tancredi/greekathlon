@@ -55,6 +55,14 @@ module.exports =
 		values = ( "'#{val}'" for key, val of values ).join ', '
 		@query "INSERT INTO #{table}(#{keys}) values(#{values})", [], callback
 
+	delete: (table, conditions = {}, callback) ->
+		queryStr = "DELETE FROM #{table}"
+
+		conditionStr = ( "#{key} = '#{value}'" for key, value of conditions ).join ', '
+		if conditionStr.length then queryStr += " WHERE #{conditionStr}"
+
+		@query queryStr, [], callback
+
 	createTable: (tableName, schema = {}, callback) ->
 		fieldsStr = "id INTEGER PRIMARY KEY AUTOINCREMENT"
 		fieldsStrAdd = ( "#{key} #{type}" for key, type of schema ).join ', '

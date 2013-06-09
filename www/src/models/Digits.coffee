@@ -1,9 +1,9 @@
 
-BaseModel = require('../core/Model').BaseModel
+BaseModel = require '../core/BaseModel'
 
 class Digits extends BaseModel
 	tableName: 'digits'
 	schema:
 		value: 'TEXT'
 
-module.exports = Digits: Digits
+module.exports = Digits

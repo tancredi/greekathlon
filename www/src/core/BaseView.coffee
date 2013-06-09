@@ -41,4 +41,4 @@ class BaseView
 		@resize()
 		@elements.main.show()
 
-module.exports = BaseView: BaseView
+module.exports = BaseView
