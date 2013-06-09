@@ -78,7 +78,8 @@
     };
 
     HomeView.prototype.loadData = function() {
-      var self;
+      var self,
+        _this = this;
       self = this;
       return db.select('digits', {}, {
         order: ['id', -1]
@@ -94,7 +95,7 @@
           }, generateDigitCtx(entry.value)));
         }
         savedList = $(renderer.render('saved-list', ctx));
-        self.elements.savedWrap.append(savedList);
+        _this.elements.savedWrap.append(savedList);
         return new DigitsList(savedList, '[data-role="saved-digits"]');
       });
     };

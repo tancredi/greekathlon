@@ -2,43 +2,43 @@ renderer = require './renderer'
 device = require './device'
 
 class BaseView
-	templateName: ''
-	fixHeight: false
-	classNames: ''
-	context: {}
+  templateName: ''
+  fixHeight: false
+  classNames: ''
+  context: {}
 
-	constructor: ->
+  constructor: ->
 
-	render: (wrapper) =>
-		rendered = renderer.render "views/#{@templateName}", @context
+  render: (wrapper) =>
+    rendered = renderer.render "views/#{@templateName}", @context
 
-		@elements = main: $ "<div data-role='view' class='view #{@classNames}'>#{rendered}</div>"
+    @elements = main: $ "<div data-role='view' class='view #{@classNames}'>#{rendered}</div>"
 
-		if @fixHeight then @elements.main.css height: device.get('size').height
+    if @fixHeight then @elements.main.css height: device.get('size').height
 
-		@getElements()
+    @getElements()
 
-		if wrapper? then @elements.main.appendTo wrapper
-		@resize()
-		@bind()
+    if wrapper? then @elements.main.appendTo wrapper
+    @resize()
+    @bind()
 
-		$(window).on 'resize', => @resize()
-		
-		return @
+    $(window).on 'resize', => @resize()
+    
+    return @
 
-	getElements: =>
+  getElements: =>
 
-	resize: =>
+  resize: =>
 
-	bind: =>
+  bind: =>
 
-	close: => @elements.main.remove()
+  close: => @elements.main.remove()
 
-	hide: =>  @elements.main.hide()
+  hide: =>  @elements.main.hide()
 
-	show: =>
-		@elements.main.removeAttr 'style'
-		@resize()
-		@elements.main.show()
+  show: =>
+    @elements.main.removeAttr 'style'
+    @resize()
+    @elements.main.show()
 
 module.exports = BaseView

@@ -6,18 +6,18 @@ classNames = touchActive: 'touch-active'
 activeStateDuration = 200
 
 module.exports =
-	
-	initialise: -> @bind()
+  
+  initialise: -> @bind()
 
-	bind: ->
-		self = @
-		$('body').on 'click touchend', clickables, -> self.onClick $ @
+  bind: ->
+    self = @
+    $('body').on 'click touchend', clickables, -> self.onClick $ @
 
-	onClick: (element) ->
-		element.addClass classNames.touchActive
+  onClick: (element) ->
+    element.addClass classNames.touchActive
 
-		element.data 'touchActiveTimer', setTimeout =>
-			element.removeClass classNames.touchActive
-			if element.data('touchActiveTimer')?
-				clearTimeout element.data('touchActiveTimer')
-		, activeStateDuration
+    element.data 'touchActiveTimer', setTimeout =>
+      element.removeClass classNames.touchActive
+      if element.data('touchActiveTimer')?
+        clearTimeout element.data('touchActiveTimer')
+    , activeStateDuration

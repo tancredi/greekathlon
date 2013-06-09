@@ -1,8 +1,8 @@
 
 class BaseModel
-	tableName: ''
-	schema: {}
+  tableName: ''
+  schema: {}
 
-	constructor: (values) ->
+  constructor: (values) ->
 
 module.exports = BaseModel

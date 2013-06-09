@@ -8,12 +8,12 @@ models = require './core/models'
 
 # Load views
 views.load
-	home: require './views/HomeView'
-	output: require './views/OutputView'
+  home: require './views/HomeView'
+  output: require './views/OutputView'
 
 # Load models
 models.load
-	digits: require './models/Digits'
+  digits: require './models/Digits'
 
 # Load templates
 renderer.templates = window.templates
@@ -25,15 +25,15 @@ init = -> if device.get('type')? then bind() else onDeviceReady()
 bind = -> document.addEventListener 'deviceready', onDeviceReady, false
 
 onDeviceReady = ->
-	# Initialise clickables
-	clickables.initialise()
+  # Initialise clickables
+  clickables.initialise()
 
-	# Initialise DB
-	db.initialise()
-	models.initialise()
+  # Initialise DB
+  db.initialise()
+  models.initialise()
 
-	models.onReady =>
-		# Open First view
-		view = views.open 'home'
+  models.onReady =>
+    # Open First view
+    view = views.open 'home'
 
 init()
