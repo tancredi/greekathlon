@@ -1,15 +1,18 @@
 
+# This module provides information about the device
+
+# Gets device type from browser agend from supported ones
+deviceType = window.navigator.userAgent.match /(iPhone|iPod|iPad|Android|BlackBerry)/
+
 device =
-  type: window.navigator.userAgent.match /(iPhone|iPod|iPad|Android|BlackBerry)/
-  size: null
-  clickEvent: null
+  type: deviceType	# Returning null assumes device is not mobile
+  size: null		# Device screen size
 
-device.clickEvent = if device.type? then 'touchend' else 'click'
-
+# Updates screen size when device resizes
 onResize = -> device.size = width: $(window).innerWidth(), height: $(window).innerHeight()
-
 $(window).on 'resize', onResize
 
+# Executes once to populate device size
 onResize()
 
 module.exports =

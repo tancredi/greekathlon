@@ -9,7 +9,8 @@ config =
   estimatedSize: 1024 * 1024
 
 module.exports =
-   
+
+  # Find database support or mock it
   initialise: ->
     if not window.openDatabase
       @db = transaction: (callback) -> callback executeSql: (query, options, callback) -> callback null, null
@@ -17,9 +18,11 @@ module.exports =
     else
       @db = window.openDatabase config.ns, config.version, config.name, config.estimatedSize
       @supported = true
+      schemas.initialise()
 
   onError: (q, m) -> console.log 'DB ERROR:', m
 
+  # Main interface for queries
   query: (queryStr, options = [], callback) ->
     if debugDb then console.log "DB QUERY: #{queryStr}"
     @db.transaction (t) =>
@@ -29,6 +32,7 @@ module.exports =
       , @onError
     , @onError
 
+  # Converts query results into arrays of objects
   fixResults: (res) ->
     result = []
 
@@ -38,6 +42,7 @@ module.exports =
 
     return result
 
+  # Interface for SELECT queries
   select: (table, conditions = {}, options = {}, callback) ->
     queryStr = "SELECT * FROM #{table}"
 
@@ -51,11 +56,13 @@ module.exports =
 
     @query queryStr, [], callback
 
+  # Interface for insert queries
   insert: (table, values = {}, callback) ->
     keys = ( key for key, val of values ).join ', '
     values = ( "'#{val}'" for key, val of values ).join ', '
     @query "INSERT INTO #{table}(#{keys}) values(#{values})", [], callback
 
+  # Interface for DELETE queries
   delete: (table, conditions = {}, callback) ->
     queryStr = "DELETE FROM #{table}"
 
@@ -64,6 +71,7 @@ module.exports =
 
     @query queryStr, [], callback
 
+  # Interface for CREATE TABLE queries
   createTable: (tableName, schema = {}, callback) ->
     fieldsStr = "id INTEGER PRIMARY KEY AUTOINCREMENT"
     fieldsStrAdd = ( "#{key} #{type}" for key, type of schema ).join ', '
@@ -72,6 +80,8 @@ module.exports =
 
     @query "CREATE TABLE IF NOT EXISTS #{tableName}(#{fieldsStr})", [], callback
 
+  # Interface for DROP TABLE queries
   dropTable: (tableName, callback) -> @query "DROP TABLE #{tableName}", [], callback
 
-  onReady: schemas.onReady
+  # Emits when DB ready (At the moment only executing schemas retrieval or creation)
+  onReady: (callback) -> schemas.onReady callback

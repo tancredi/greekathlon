@@ -1,10 +1,13 @@
 
+# Import Core Modules
 device = require './core/device'
-clickables = require './ui/clickables'
 db = require './core/db'
 renderer = require './core/renderer'
 views = require './core/views'
 schemas = require './core/schemas'
+
+# Import Secondary Modules
+clickables = require './ui/clickables'
 
 # Import Views
 views.load
@@ -30,10 +33,9 @@ onDeviceReady = ->
 
   # Initialise DB
   db.initialise()
-  schemas.initialise()
 
-  schemas.onReady =>
-    # Open First view
+  db.onReady =>
+    # Open Initial view
     view = views.open 'home'
 
 init()
