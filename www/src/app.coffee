@@ -33,8 +33,9 @@ onDeviceReady = ->
 
   # Initialise DB
   db.initialise()
+  schemas.initialise()
 
-  db.onReady =>
+  schemas.onReady =>
     # Open Initial view
     view = views.open 'home'
 

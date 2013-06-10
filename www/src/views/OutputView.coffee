@@ -16,8 +16,10 @@ class OutputView extends BaseView
     @elements.back = getByRole 'back', @elements.main
 
   constructor: (digits) ->
+    super()
+    
     pairContexts = generateDigitCtx digits
-    $.extend this.context, pairContexts
+    $.extend @context, pairContexts
 
   bind: =>
     super()

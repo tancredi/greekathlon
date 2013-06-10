@@ -2,7 +2,6 @@
 # DB manager: Filters calls to local HTML5 DB (SQLite)
 
 debugDb = require('./debug').debugDB
-schemas = require './schemas'
 
 # SQLite database configuration
 config =
@@ -21,7 +20,6 @@ module.exports =
     else
       @db = window.openDatabase config.ns, config.version, config.name, config.size
       @supported = true
-      schemas.initialise()
 
   onError: (q, m) -> console.log 'DB ERROR:', m
 
@@ -85,6 +83,3 @@ module.exports =
 
   # Interface for DROP TABLE queries
   dropTable: (tableName, callback) -> @query "DROP TABLE #{tableName}", [], callback
-
-  # Emits when DB ready (At the moment only executing schemas retrieval or creation)
-  onReady: (callback) -> schemas.onReady callback
