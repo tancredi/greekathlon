@@ -5,3 +5,5 @@ www/lib
 www/css/index.css
 *.DS_Store
 *.xcuserstate
+*.sublime-project
+*.sublime-workspace
