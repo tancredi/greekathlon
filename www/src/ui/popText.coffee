@@ -33,7 +33,7 @@ module.exports =
     element.appendTo $ 'body'
 
     if options.center
-      deviceSize = device.get 'size'
+      deviceSize = device.getSize()
       position =
         x: deviceSize.width / 2 - element.width() / 2
         y: deviceSize.height / 2 - element.height() / 2

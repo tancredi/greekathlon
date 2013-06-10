@@ -1,5 +1,6 @@
 
-debugDb = require('./debug').get 'db'
+debugDb = require('./debug').debugDB
+schemas = require './schemas'
 
 config =
   ns: 'greekathlon'
@@ -72,3 +73,5 @@ module.exports =
     @query "CREATE TABLE IF NOT EXISTS #{tableName}(#{fieldsStr})", [], callback
 
   dropTable: (tableName, callback) -> @query "DROP TABLE #{tableName}", [], callback
+
+  onReady: schemas.onReady

@@ -14,7 +14,7 @@ class BaseView
 
     @elements = main: $ "<div data-role='view' class='view #{@classNames}'>#{rendered}</div>"
 
-    if @fixHeight then @elements.main.css height: device.get('size').height
+    if @fixHeight then @elements.main.css height: device.getSize().height
 
     @getElements()
 

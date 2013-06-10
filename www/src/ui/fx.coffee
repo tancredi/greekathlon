@@ -11,7 +11,7 @@ module.exports =
       scaleStart: .5
       scale: .8
       scaleEnd: .8
-      wait: if debug.get('fast') then 1 else 1200
+      wait: if debug.skipAnimations then 1 else 1200
       move: [ 0, 0 ]
       easeIn: 'easeOutQuart'
       easeOut: 'easeInQuart'

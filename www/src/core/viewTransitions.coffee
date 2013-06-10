@@ -2,12 +2,12 @@
 device = require './device'
 debug = require './debug'
 
-defaultDuration = if debug.get('fast') then 0 else 400
+defaultDuration = if debug.skipAnimations then 0 else 400
 
 wrap = $ '#view-wrap'
 
 placeAbsolutely = (view) ->
-  deviceSize = device.get 'size'
+  deviceSize = device.getSize()
   view.elements.main.css
     position: 'absolute'
     top: 0
@@ -26,7 +26,7 @@ popView = (scaleFrom, newView, oldView, callback, duration = defaultDuration) ->
   , defaultDuration
 
 horizontalSlide = (dir, newView, oldView, callback, duration = defaultDuration) ->
-  deviceSize = device.get 'size'
+  deviceSize = device.getSize()
 
   wrap.css
     width: deviceSize.width
