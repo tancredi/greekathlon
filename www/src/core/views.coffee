@@ -1,4 +1,6 @@
 
+# Views manager - Stores, instanciates, animate and handle views
+
 renderer = require './renderer'
 getByRole = require('../helpers/dom').getByRole
 transitions = require './viewTransitions'

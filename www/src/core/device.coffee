@@ -1,5 +1,5 @@
 
-# This module provides information about the device
+# Provides information about the device
 
 # Gets device type from browser agend from supported ones
 deviceType = window.navigator.userAgent.match /(iPhone|iPod|iPad|Android|BlackBerry)/

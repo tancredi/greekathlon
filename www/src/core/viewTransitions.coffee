@@ -1,4 +1,6 @@
 
+# View Transitions - Core transitions and core DOM manipulation
+
 device = require './device'
 debug = require './debug'
 

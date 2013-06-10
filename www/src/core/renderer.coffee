@@ -1,5 +1,6 @@
 
 # Templates manager and renderer using Handlebars
+
 module.exports =
 
   templates: {}

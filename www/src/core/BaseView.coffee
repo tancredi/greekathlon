@@ -1,7 +1,9 @@
+
+# Base class for all views - takes care of basic rendering and defines mein methods
+
 renderer = require './renderer'
 device = require './device'
 
-# Base class for all views - takes care of basic rendering and defines mein methods
 # called by views module when initialising new views or changing state
 class BaseView
   templateName: ''  # Relative to www/templates/views

@@ -1,8 +1,10 @@
 
+# DB manager: Filters calls to local HTML5 DB (SQLite)
+
 debugDb = require('./debug').debugDB
 schemas = require './schemas'
 
-# SQLLite database configuration
+# SQLite database configuration
 config =
   ns: 'greekathlon'       # Local DB namespace
   version: ''             # Database Version
