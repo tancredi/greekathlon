@@ -2,11 +2,12 @@
 debugDb = require('./debug').debugDB
 schemas = require './schemas'
 
+# SQLLite database configuration
 config =
-  ns: 'greekathlon'
-  version: ''
-  name: 'Greekathlon'
-  estimatedSize: 1024 * 1024
+  ns: 'greekathlon'       # Local DB namespace
+  version: ''             # Database Version
+  name: 'Greekathlon'     # Display Name
+  size: 1024 * 1024       # Database Size
 
 module.exports =
 
@@ -16,7 +17,7 @@ module.exports =
       @db = transaction: (callback) -> callback executeSql: (query, options, callback) -> callback null, null
       @supported = false
     else
-      @db = window.openDatabase config.ns, config.version, config.name, config.estimatedSize
+      @db = window.openDatabase config.ns, config.version, config.name, config.size
       @supported = true
       schemas.initialise()
 

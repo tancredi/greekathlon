@@ -2,10 +2,13 @@
 device = require './device'
 debug = require './debug'
 
+# Overall duration of all views transition
 defaultDuration = if debug.skipAnimations then 0 else 400
 
+# Needed to tweak CSS overflow while moving view elements around
 wrap = $ '#view-wrap'
 
+# Absolutely position an element and resize to take all available space
 placeAbsolutely = (view) ->
   deviceSize = device.getSize()
   view.elements.main.css
@@ -15,6 +18,7 @@ placeAbsolutely = (view) ->
     width: deviceSize.width
     height: deviceSize.height
 
+# Pop FX base function: Zooms in / out while fading
 popView = (scaleFrom, newView, oldView, callback, duration = defaultDuration) ->
   placeAbsolutely newView
 
@@ -25,6 +29,7 @@ popView = (scaleFrom, newView, oldView, callback, duration = defaultDuration) ->
     callback newView
   , defaultDuration
 
+# Horizontal Slide FX base function: switch views sliding screen on left / right
 horizontalSlide = (dir, newView, oldView, callback, duration = defaultDuration) ->
   deviceSize = device.getSize()
 
@@ -44,13 +49,8 @@ horizontalSlide = (dir, newView, oldView, callback, duration = defaultDuration) 
       height: deviceSize.height
     oldView.elements.main.transition x: ( 100 * -dir) + '%', duration, -> callback newView
 
-module.exports =
-
-  'slide-right': (newView, oldView, callback) -> horizontalSlide 1, newView, oldView, callback
-
-  'slide-left': (newView, oldView, callback) -> horizontalSlide -1, newView, oldView, callback
-
-  'flip': (newView, oldView, callback) ->
+# Flip FX base function: Rotates the screen on Y axis to reveal new view
+flipViews: (newView, oldView, callback) ->
     duration = defaultDuration
 
     placeAbsolutely newView
@@ -64,8 +64,21 @@ module.exports =
       newView.elements.main.transition rotateY: '0deg', duration / 2
     , duration / 2, -> callback newView
 
+module.exports =
+
+  # Horizontal slide FX preset: Left to right
+  'slide-right': (newView, oldView, callback) -> horizontalSlide 1, newView, oldView, callback
+
+  # Horizontal slide FX preset: Right to left
+  'slide-left': (newView, oldView, callback) -> horizontalSlide -1, newView, oldView, callback
+
+  # Flip FX preset
+  'flip': flipViews
+
+  # Pop FX preset: Pops new view zooming out
   'pop-out': (newView, oldView, callback) -> popView 2.2, newView, oldView, callback
 
+  # Pop FX preset: Pops new view zooming in
   'pop-in': (newView, oldView, callback) -> popView .7, newView, oldView, callback
     
 
