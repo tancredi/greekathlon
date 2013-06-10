@@ -52,7 +52,7 @@ horizontalSlide = (dir, newView, oldView, callback, duration = defaultDuration) 
     oldView.elements.main.transition x: ( 100 * -dir) + '%', duration, -> callback newView
 
 # Flip FX base function: Rotates the screen on Y axis to reveal new view
-flipViews: (newView, oldView, callback) ->
+flipViews = (newView, oldView, callback) ->
     duration = defaultDuration
 
     placeAbsolutely newView
