@@ -19,7 +19,7 @@
 
 //
 //  AppDelegate.m
-//  Greekhatlon
+//  Numbonic
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
@@ -81,7 +81,7 @@
 }
 
 // this happens while we are running ( in the background, or from within our own app )
-// only valid if Greekhatlon-Info.plist specifies a protocol to handle
+// only valid if Numbonic-Info.plist specifies a protocol to handle
 - (BOOL)application:(UIApplication*)application handleOpenURL:(NSURL*)url
 {
     if (!url) {

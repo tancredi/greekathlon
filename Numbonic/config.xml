@@ -35,8 +35,6 @@
     <preference name="ShowSplashScreenSpinner" value="true" />
     <preference name="SuppressesIncrementalRendering" value="false" />
     <preference name="TopActivityIndicator" value="gray" />
-    <preference name="UIWebViewBounce" value="false" />
-     <preference name="fullscreen" value="true" />
 
     <content src="index.html" />
 

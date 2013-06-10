@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>Numbonic</string>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
@@ -26,7 +26,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>com.memrise.greekathlon</string>
+	<string>com.memrise.numbonic</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -46,8 +46,6 @@
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIStatusBarHidden</key>
-	<true/>
-	<key>UIStatusBarHidden~ipad</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
