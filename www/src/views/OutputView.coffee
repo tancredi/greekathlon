@@ -10,20 +10,18 @@ class OutputView extends BaseView
   fixHeight: true
   classNames: 'view-results'
 
+  constructor: (digits) ->
+    pairContexts = generateDigitCtx digits
+    @context = $.extend @context, pairContexts
+
   getElements: =>
     super()
 
     @elements.back = getByRole 'back', @elements.main
 
-  constructor: (digits) ->
-    super()
-    
-    pairContexts = generateDigitCtx digits
-    $.extend @context, pairContexts
-
   bind: =>
     super()
-    
+
     @elements.back.on 'click touchend', -> views.open 'home', 'slide-left'
 
 module.exports = OutputView

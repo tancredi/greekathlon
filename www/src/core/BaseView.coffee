@@ -9,10 +9,7 @@ class BaseView
   templateName: ''  # Relative to www/templates/views
   fixHeight: false  # Set view height to device screen height after rendering
   classNames: ''    # Will be applied along with '.view'
-
-  constructor: ->
-    # This context property will passed when rendering view template
-    @context = {}
+  context: {}
 
   # Render template, append element to given wrapper and perform additional operations
   render: (wrapper) =>
